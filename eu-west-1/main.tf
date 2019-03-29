@@ -17,18 +17,24 @@ terraform {
   }
 }
 
-
 module "vpc_vpc1" {
-  source   = "../modules//network//vpc1/"
-  region = "${var.region}"
-  vpc-cidr = "${var.vpc-cidr}"
+  source       = "../modules//network//vpc1/"
+  region       = "${var.region}"
+  vpc-cidr     = "${var.vpc-cidr}"
   subnet-cidrs = "${var.subnet-cidrs}"
   azs          = "${var.azs}"
 }
 
+module "alb" {
+  source              = "../modules//alb/"
+  vpc_id              = "${module.vpc_vpc1.vpc_id}"
+  environment         = "${var.environment}"
+  allowed_cidr_blocks = "10.10.10.0/27"
+  subnet_ids          = "${module.vpc_vpc1.subnet_ids}"
+}
 
-# module "ec2" {
-#   source   = "../modules//ec2/"
-#   vpc-id = "${module.vpc_vpc1.vpc_id}"
-#   subnet-id = "${module.vpc_vpc1.subneta_id}"
-# }
+module "ec2" {
+  source    = "../modules//ec2/"
+  vpc-id    = "${module.vpc_vpc1.vpc_id}"
+  subnet-id = "${module.vpc_vpc1.subnet_ids}"
+}

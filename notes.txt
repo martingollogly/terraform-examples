@@ -1,0 +1,49 @@
+## notes.txt
+
+1. Completed
+
+2.The EC2 instance running Nginx went down over the weekend and we had an outage, it's been decided that we need a solution 
+that is more resilient than just a single instance. Please implement a solution that you'd be confident would continue to run in the event one instance goes down. 
+
+Comments:
+```
+I have decided to Create an ALB to make the EC available over 2 azs. 
+I would also use an auto scaling group with a minium value of 1
+```
+
+3.We are looking to improve the security of our network we've decided we need a bastion server to avoid logging on 
+directly to our servers. Add a bastion server, the bastion should be the only route to SSH onto any server in the 
+entire VPC.
+
+Comments:
+```
+I have extracted the EC2 instance from the main.tf and made it available as a seperate module
+to satisfy spin up for the current Nginx instance and the micro instance for a bastion.
+
+Note: I would prefer this was a VPC lambda and didn't need to hang around post deployment. The EC2 bastion seems unneccesary step. 
+This would also avoid the need to grant ssh access from a VPN IP whitelist making it more desirable from a seucrity perspective 
+as a deployment option
+```
+
+4.a) The team have decided to use the Java framework Spring Boot to build features for our website. 
+Deploy the following sample application into the VPC, reconfigure Nginx as a reverse proxy to the Java app. 
+Provide a modification to the Terraform output/curl command to get the hello world text that the application serves.
+``` 
+https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-tomcat
+```
+
+Comments:
+```
+I would Again use a VPC lambda (Java to deploy the application) to the ec2.
+For simpliciy initially Uploading the deployment to s3 which the EC" could fetch on boot and run (thinking in the future about tooling for example ansible)
+```
+
+4.b) Follow the instructions in a) but instead deploy the following application, with an alteration to use an Amazon 
+RDS managed database rather than the default H2 in memory database. 
+https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-data-jpa
+
+Comments:
+```
+I would create and RDS module and create a security group between the ec2 and the rds database.
+I would consider using an API Gateway with a private endpoint endpoint that access the service on the ec2
+```
