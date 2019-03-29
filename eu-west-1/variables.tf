@@ -2,6 +2,8 @@ variable "region" {}
 
 variable "vpc-cidr" {}
 
+variable "environment" {}
+
 variable "subnet-cidrs" {
   type   = "map"
   default = {

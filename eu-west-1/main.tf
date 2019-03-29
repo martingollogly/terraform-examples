@@ -26,6 +26,13 @@ module "vpc_vpc1" {
   azs          = "${var.azs}"
 }
 
+module "alb" {
+  source       = "../modules//alb/"
+  vpc_id     = "${module.vpc_vpc1.vpc_id}"
+  environment  = "${var.environment}"
+  allowed_cidr_blocks = "${var.subnet-cidrs}" 
+}
+
 
 # module "ec2" {
 #   source   = "../modules//ec2/"
