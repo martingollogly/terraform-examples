@@ -5,7 +5,8 @@ variable "vpc-cidr" {}
 variable "environment" {}
 
 variable "subnet-cidrs" {
-  type   = "map"
+  type = "map"
+
   default = {
     "0" = "10.10.10.0/27"
     "1" = "10.10.10.32/27"
@@ -13,9 +14,9 @@ variable "subnet-cidrs" {
   }
 }
 
-
 variable "azs" {
-  type   = "map"
+  type = "map"
+
   default = {
     "0" = "a"
     "1" = "b"
