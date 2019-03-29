@@ -18,9 +18,10 @@ entire VPC.
 Comments:
 ```
 I have extracted the EC2 instance from the main.tf and made it available as a seperate module
-to satisfy spin up a the current Nginx instance and the micro instance for a bastion.
-Note: I would prefer this was a VPC lambda and didn't need to hang around post deployment. 
-This would also avoid the need to ssh from a VPN IP whitelist making it more desirable from a seucrity perspective 
+to satisfy spin up for the current Nginx instance and the micro instance for a bastion.
+
+Note: I would prefer this was a VPC lambda and didn't need to hang around post deployment. The EC2 bastion seems unneccesary step. 
+This would also avoid the need to grant ssh access from a VPN IP whitelist making it more desirable from a seucrity perspective 
 as a deployment option
 ```
 
